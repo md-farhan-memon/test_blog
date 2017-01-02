@@ -1,0 +1,20 @@
+.container
+  .row
+    .col-md-10.col-md-offset-1
+      .row
+        %article
+          %h2= @post.title
+          .row
+            .group1.col-sm-6.col-md-6
+              %span.glyphicon.glyphicon-pencil
+              %a{href: published_posts_path(@post.user)}= @post.user.full_name
+            .group2.col-sm-6.col-md-6{style: "text-align: right;"}
+              %span.glyphicon.glyphicon-user
+              = "#{@post.views} Views"
+              %span.glyphicon.glyphicon-time
+              = @post.created_at.strftime("%b %d, %Y")
+          %hr
+          %p.lead{style: "text-align: justify;"}= @post.body
+          %hr
+        - if (acc = current_account).present? && acc.accountable_id == @post.user_id
+          = button_to "Edit Post", edit_post_path(@post), method: 'get', class: "btn btn-primary"

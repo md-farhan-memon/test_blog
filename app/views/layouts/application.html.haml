@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}
+      %title= full_title(yield(:title))
+      = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+      = javascript_include_tag 'application', 'data-turbolinks-track' => true
+      = csrf_meta_tags
+    %body{style: 'padding-top: 70px; padding-bottom: 80px'}
+      = render partial: 'layouts/header'
+      .container
+        - flash.each do |name, msg|
+          = content_tag :div, msg, class: "alert alert-info"
+        = yield
+      = render partial: 'layouts/footer'

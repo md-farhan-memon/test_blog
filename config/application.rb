@@ -22,5 +22,8 @@ module TestBlog
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    Kaminari.configure do |config|
+      config.page_method_name = :per_page_kaminari
+    end
   end
 end

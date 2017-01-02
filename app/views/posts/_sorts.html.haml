@@ -1,0 +1,5 @@
+%sort.form-inline{style: "text-align: right;"}
+  = form_tag request.fullpath, method: 'get', style: "margin-top: 28px;" do
+    = select_tag 'sort', options_for_select(['Sort by Date', 'Sort by Popularity'], params[:sort]), class: "form-group form-control"
+    = button_tag(type: "submit", class: "btn btn-default") do
+      %i.glyphicon.glyphicon-refresh

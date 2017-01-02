@@ -1,0 +1,13 @@
+.container
+  .row
+    .col-md-10.col-md-offset-1
+      .row
+        .col-md-6
+          - title = (params[:sort] == 'Sort by Popularity' ? "Popular" : "Latest") + " Posts"
+          - title += " for #{params[:query]}." if params[:query].present?
+          - title += " by #{@posts.first.user.full_name}." if params[:id].present? && @posts.present?
+          %h1= title
+        .col-md-6
+          = render partial: 'sorts'
+      %hr
+      = render partial: 'listing'

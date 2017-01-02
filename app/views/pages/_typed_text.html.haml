@@ -1,0 +1,80 @@
+#typedtext.text{align: 'center'}
+#writtentext.text{align: 'center', style: "visibility:hidden; display:none;"}
+  %p Hi, Welcome to the world of LITERATURE..
+  %p Here you READ and/or WRITE your hearts out.
+  %p SignUp to share with the world and also read what world wants to tell you.
+#posts_link{style: "visibility:hidden; display:none;"}
+  = button_to "Click to Browse Posts by other Users", posts_path, method: 'get', class: "btn btn-primary btn-block"
+
+:javascript
+  function readCookie(name) {
+    var nameEQ = name + "=", ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i += 1) {
+      var c = ca[i];
+      while (c.charAt(0) === ' ') { 
+        c = c.substring(1, c.length);
+      }
+      if (c.indexOf(nameEQ) === 0) {
+        return c.substring(nameEQ.length, c.length);
+      }
+    }
+    return null;
+  }
+
+  if (readCookie('welcomed') == null){
+    setTimeout(function(){ 
+      document.getElementById('posts_link').style.visibility = "visible";
+      document.getElementById('posts_link').style.display = "block"
+    },20000);
+
+    var aText = new Array(
+    "Hi, Welcome to the world of LITERATURE..", 
+    "Here you READ and/or WRITE your hearts out.",
+    "SignUp to share with the world and also read what world wants to tell you."
+    );
+    var iSpeed = 130; // time delay of print out
+    var iIndex = 0; // start printing array at this posision
+    var iArrLength = aText[0].length; // the length of the text array
+    var iScrollAt = 20; // start scrolling up at this many lines
+     
+    var iTextPos = 0; // initialise text position
+    var sContents = ''; // initialise contents variable
+    var iRow; // initialise current row
+     
+    function typewriter()
+    {
+      sContents =  ' ';
+      iRow = Math.max(0, iIndex-iScrollAt);
+      var destination = document.getElementById("typedtext");
+
+      while ( iRow < iIndex ) {
+        sContents += aText[iRow++] + '<br />';
+      }
+      destination.innerHTML = sContents + aText[iIndex].substring(0, iTextPos) + "_";
+      if ( iTextPos++ == iArrLength ) {
+        iTextPos = 0;
+        iIndex++;
+        if ( iIndex != aText.length ) {
+          iArrLength = aText[iIndex].length;
+        setTimeout("typewriter()", 50);
+        }
+      }
+      else {
+        setTimeout("typewriter()", iSpeed);
+      }
+    }
+    typewriter();
+    document.cookie = "welcomed=true; expires=Sat, 31 Dec 2050 12:00:00 UTC"
+  } else {
+    document.getElementById('writtentext').style.visibility = "visible";
+    document.getElementById('posts_link').style.display = "block"
+    document.getElementById('posts_link').style.visibility = "visible";
+    document.getElementById('writtentext').style.display = "block";
+  }
+
+:css
+  .text {
+    font-size:2vw;
+    margin: 10px 50px;
+    font-weight: bold;
+  }
