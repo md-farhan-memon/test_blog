@@ -1,28 +1,31 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an example of blog created using Ruby on Rails
 
-Things you may want to cover:
+it is already hosted on heroku for live demo: [https://test-blog-farhan.herokuapp.com](https://test-blog-farhan.herokuapp.com/)
 
-* Ruby version
+To setup:
 
-* System dependencies
+* Clone/download the repository
 
-* Configuration
+* run <tt>bundle install</tt>
 
-* Database creation
+* run <tt>rake db:migrate</tt> , <tt>rake db:setup</tt> if required
 
-* Database initialization
+* run <tt>rake db:seed</tt> to create a user and a admin
 
-* How to run the test suite
+  user:
 
-* Services (job queues, cache servers, search engines, etc.)
+      email: test@user.com
+      pswd: test@1234
 
-* Deployment instructions
+  admin:
 
-* ...
+      email: test@admin.com
+      pswd: test@1234
 
+* run <tt>rake create_users</tt> to generate multiple users
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* run <tt>rake create_blogs</tt> to create dummy blogs
+
+* Browse and feel free to fork, comment and report bugs
