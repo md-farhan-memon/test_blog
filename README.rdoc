@@ -2,7 +2,7 @@
 
 This is an example of blog created using Ruby on Rails
 
-it is already hosted on heroku for live demo: [https://test-blog-farhan.herokuapp.com](https://test-blog-farhan.herokuapp.com/)
+it is already hosted on heroku for live demo: [https://test-blog-farhan.herokuapp.com](https://test-blog-farhan.herokuapp.com)
 
 To setup:
 
