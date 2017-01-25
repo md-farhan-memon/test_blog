@@ -1,0 +1,4 @@
+- if @follower
+  = button_to 'Un Follow', unfollow_user_path(user_id: params[:id]), method: :delete, class: 'btn btn-large btn-danger'
+- else
+  = button_to 'Follow', follow_user_path(user_id: params[:id]), method: :post, class: 'btn btn-large btn-primary'

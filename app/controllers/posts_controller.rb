@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   after_action :update_view_count, only: [:show]
 
   def index
-    @posts = Post.published.includes(:user).page(params[:page]).order(@sort)
+    @posts = Post.published.public_posts.includes(:user).page(params[:page]).order(@sort)
   end
 
   def new
@@ -104,7 +104,7 @@ class PostsController < ApplicationController
   end
 
   def set_sort
-    @sort = params[:sort] == 'Sort by Popularity' ? 'views desc' : 'created_at desc'
+    @sort = params[:sort] == 'Sort by Popularity' ? 'posts.views desc' : 'posts.created_at desc'
   end
 
   def update_view_count

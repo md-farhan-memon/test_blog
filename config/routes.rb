@@ -13,8 +13,10 @@ Rails.application.routes.draw do
       get :search
     end
   end
-  resources :user, only: [:edit, :update] do
+  resources :user, only: [:edit, :update, :show] do
     member do
+      post :follow
+      delete :unfollow
       resource :posts, only: [] do
         get :drafts
         get :published, on: :collection

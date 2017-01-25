@@ -24,6 +24,8 @@ gem 'will_paginate-bootstrap'
 gem 'bootstrap-sass'
 gem "haml-rails"
 gem 'twitter-typeahead-rails'
+# Followers
+gem "acts_as_follower"
 
 gem 'rails_12factor', group: :production
 

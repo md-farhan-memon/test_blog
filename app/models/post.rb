@@ -1,11 +1,12 @@
 class Post < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :user_id, :title, :body
-  before_save :index_title
+  before_save :index_title, if: Proc.new { |post| post.user.public? }
   after_destroy :remove_index
 
   scope :published, -> { where(published: true) }
   scope :drafted, -> { where(draft: true) }
+  scope :public_posts, -> { joins(:user).where("users.public = ?", true) }
   self.per_page = 8
 
   def index_title

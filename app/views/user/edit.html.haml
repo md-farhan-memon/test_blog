@@ -1,3 +1,4 @@
+= javascript_include_tag 'bootstrap-checkbox.min.js'
 = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js'
 = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js'
 = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css'
@@ -15,11 +16,19 @@
         %br
         = label_tag :gender
         = select_tag :gender, options_for_select(['Male', 'Female'], @user.gender), class: "form-control"
+        %br
         = label_tag :dob
         #datetimepicker.input-group
           .form-control= text_field_tag :dob, @user.dob, style: "border: none"
           %span.input-group-addon
             %span.glyphicon.glyphicon-calendar
+        %br
+        = label_tag :public
+        %em
+          (If 'NO', only users who follow you will be able to view your posts.)
+        %br
+        %input{"data-reverse" => "", "type" => 'checkbox', "data-off-icon-cls" => "glyphicon-thumbs-down", "data-on-icon-cls" => "glyphicon-thumbs-up", 'checked' => @user.public, name: 'public'}
+        %br
         %br
         = submit_tag "Save", class: "btn btn-primary"
 
@@ -32,3 +41,7 @@
       maxDate: tenYears
     });
   });
+
+  $(function () {
+    $(':checkbox').checkboxpicker();
+  })
