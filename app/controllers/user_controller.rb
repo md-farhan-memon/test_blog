@@ -14,9 +14,14 @@ class UserController < ApplicationController
     redirect_to edit_user_path
   end
 
+  def delete_image
+    current_user.update_attribute(:avatar, nil)
+    redirect_to edit_user_path
+  end
+
   private
 
   def user_params
-    params.permit(:first_name, :last_name, :dob, :gender)
+    params.permit(:first_name, :last_name, :dob, :gender, :avatar)
   end
 end

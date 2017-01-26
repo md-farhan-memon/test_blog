@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
   resources :user, only: [:edit, :update] do
     member do
+      delete :delete_image
       resource :posts, only: [] do
         get :drafts
         get :published, on: :collection
