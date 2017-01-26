@@ -1,12 +1,21 @@
 = javascript_include_tag 'bootstrap-checkbox.min.js'
 = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js'
+= javascript_include_tag 'fileinput.min.js'
 = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js'
 = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css'
-- provide(:title, "Edit Post")
-%h1.page-header{align: 'center'} Edit Post
+= stylesheet_link_tag 'fileinput.min.css'
+- provide(:title, "Edit Profile")
+%h1.page-header{align: 'center'} Edit Profile
 .row
   .col-md-6.col-md-offset-3
-    = form_tag user_path, method: 'put' do
+    %div{align: 'center'}
+      - if @user.avatar_file_name.present?
+        = image_tag @user.avatar.url(:large, class: 'imgwrapper img-responsive')
+        %br
+        = link_to "Delete Image", delete_image_user_path, method: :delete
+      - else
+        = image_tag image_url('default_user.png', class: 'imgwrapper img-responsive')
+    = form_tag user_path, method: :put, multipart: true do
       .form-group
         = label_tag :first_name
         = text_field_tag :first_name, @user.first_name, autocomplete: "off", class: 'form-control'
@@ -18,7 +27,7 @@
         = select_tag :gender, options_for_select(['Male', 'Female'], @user.gender), class: "form-control"
         %br
         = label_tag :dob
-        #datetimepicker.input-group
+        #datetimepicker.input-group{style:  "z-index: 0"}
           .form-control= text_field_tag :dob, @user.dob, style: "border: none"
           %span.input-group-addon
             %span.glyphicon.glyphicon-calendar
@@ -29,6 +38,8 @@
         %br
         %input{"data-reverse" => "", "type" => 'checkbox', "data-off-icon-cls" => "glyphicon-thumbs-down", "data-on-icon-cls" => "glyphicon-thumbs-up", 'checked' => @user.public, name: 'public'}
         %br
+        = label_tag :avatar
+        %input#file-demo.file{"data-preview-file-type" => "any", multiple: "true", type: "file", name: "avatar", uploadUrl: user_path, method: :put}
         %br
         = submit_tag "Save", class: "btn btn-primary"
 
@@ -45,3 +56,8 @@
   $(function () {
     $(':checkbox').checkboxpicker();
   })
+
+:css
+  .input-group.file-caption-main{
+    z-index: 0;
+  }

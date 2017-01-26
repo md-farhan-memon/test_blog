@@ -26,6 +26,8 @@ gem "haml-rails"
 gem 'twitter-typeahead-rails'
 # Followers
 gem "acts_as_follower"
+# User Profile
+gem "paperclip", "~> 5.0.0"
 
 gem 'rails_12factor', group: :production
 
