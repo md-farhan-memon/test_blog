@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
   }
 
   validates_attachment :avatar,
-    :presence => true,
     :size => { :in => 0..5.megabytes },
     :content_type => { :content_type => /^image\/(jpeg|png|gif|tiff)$/ }
 

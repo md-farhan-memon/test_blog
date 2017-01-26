@@ -7,4 +7,8 @@ module ApplicationHelper
       page_title + " | " + base_title
     end
   end
+
+  def avatar(user, type)
+    user.avatar_file_name.present? ? user.avatar.url(type) : image_url('default_user.png')
+  end
 end

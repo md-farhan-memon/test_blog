@@ -9,12 +9,9 @@
 .row
   .col-md-6.col-md-offset-3
     %div{align: 'center'}
+      = image_tag image_url(avatar(@user, :large), class: 'imgwrapper img-responsive')
       - if @user.avatar_file_name.present?
-        = image_tag @user.avatar.url(:large, class: 'imgwrapper img-responsive')
-        %br
-        = link_to "Delete Image", delete_image_user_path, method: :delete
-      - else
-        = image_tag image_url('default_user.png', class: 'imgwrapper img-responsive')
+        %br= link_to "Delete Avatar", delete_avatar_user_path, method: :delete
     = form_tag user_path, method: :put, multipart: true do
       .form-group
         = label_tag :first_name
@@ -37,6 +34,7 @@
           (If 'NO', only users who follow you will be able to view your posts.)
         %br
         %input{"data-reverse" => "", "type" => 'checkbox', "data-off-icon-cls" => "glyphicon-thumbs-down", "data-on-icon-cls" => "glyphicon-thumbs-up", 'checked' => @user.public, name: 'public'}
+        %br
         %br
         = label_tag :avatar
         %input#file-demo.file{"data-preview-file-type" => "any", multiple: "true", type: "file", name: "avatar", uploadUrl: user_path, method: :put}

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     member do
       post :follow
       delete :unfollow
-      delete :delete_image
+      delete :delete_avatar
       resource :posts, only: [] do
         get :drafts
         get :published, on: :collection

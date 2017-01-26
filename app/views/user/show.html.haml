@@ -1,4 +1,68 @@
-- if @follower
-  = button_to 'Un Follow', unfollow_user_path(user_id: params[:id]), method: :delete, class: 'btn btn-large btn-danger'
-- else
-  = button_to 'Follow', follow_user_path(user_id: params[:id]), method: :post, class: 'btn btn-large btn-primary'
+= javascript_include_tag 'fileinput.min.js'
+= stylesheet_link_tag 'fileinput.min.css'
+- provide(:title, @user.full_name)
+.row
+  .col-md-3
+    %div{align: "center"}
+      = image_tag image_url(avatar(@user, :large), class: 'imgwrapper img-responsive', style: "align: center")
+    %hr
+    %div{align: "center"}
+      - if @can_follow
+        - if @follower
+          = button_to 'Un Follow', unfollow_user_path(user_id: params[:id]), method: :delete, class: 'btn btn-large btn-danger'
+        - else
+          = button_to 'Follow', follow_user_path(user_id: params[:id]), method: :post, class: 'btn btn-large btn-primary'
+      - else
+        = button_to 'Edit', edit_user_path(@user), method: :get, class: 'btn btn-large btn-primary'
+  .col-md-9
+    %h1{align: "center"}= @user.full_name
+    %br
+    - if @user.public || @follower || !@can_follow
+      .col-md-4
+        - if @user.gender == 'Male'
+          %span.glyphicon.glyphicon-king
+        - else
+          %span.glyphicon.glyphicon-queen
+        = @user.gender
+      .col-md-4
+        %span.glyphicon.glyphicon-calendar
+        = @user.dob
+      .col-md-4
+        %span.glyphicon.glyphicon-envelope
+        = @user.email
+%br
+%br
+.row
+  .col-md-3
+  .col-md-9{style: "margin-top: -10%"}
+    .col-md-4
+      %span.glyphicon.glyphicon-user
+      = "#{pluralize(@user.followers_count, 'Follower')}"
+    .col-md-4
+      %span.glyphicon.glyphicon-heart
+      = "Following #{@user.follow_count}"
+    .col-md-4
+      %span.glyphicon.glyphicon-pencil
+      = "#{pluralize(@user.posts.count, 'Post')}"
+    %hr
+%br
+.row
+  %hr
+  - if @user.public || @follower || !@can_follow
+    %h1{align: "center"} Top Posts
+    = render partial: '/posts/listing', locals: { paginate: false }
+    %div{align: "center"}= button_to "View all Posts", published_posts_path(@user), method: 'get', class: "btn btn-primary"
+  - else
+    %h1{align: "center"} Porfile is Private
+
+
+
+:javascript
+  $(function () {
+    $(':checkbox').checkboxpicker();
+  })
+
+:css
+  .input-group.file-caption-main{
+    z-index: 0;
+  }

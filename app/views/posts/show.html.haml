@@ -7,7 +7,7 @@
           .row
             .group1.col-sm-6.col-md-6
               %span.glyphicon.glyphicon-pencil
-              %a{href: published_posts_path(@post.user)}= @post.user.full_name
+              %a{href: user_path(@post.user)}= @post.user.full_name
             .group2.col-sm-6.col-md-6{style: "text-align: right;"}
               %span.glyphicon.glyphicon-user
               = "#{@post.views} Views"

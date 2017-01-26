@@ -20,18 +20,9 @@
                       %i.glyphicon.glyphicon-search
           %ul.nav.navbar-nav.navbar-right
             - if current_account.present?
-              %li
-                = link_to "LogOut", destroy_account_session_path, method: "delete"
               - if current_account.user?
-                %li.dropdown
-                  %a.dropdown-toggle{"data-toggle" => "dropdown", href: ''}
-                    Settings
-                    %b.caret
-                  %ul.dropdown-menu
-                    %li
-                      = link_to "Profile", edit_user_path(current_account.accountable)
-                    %li
-                      = link_to "Change Password", edit_account_registration_path
+                %li
+                  = link_to "Profile", user_path(current_account.accountable)
                 %li.dropdown
                   %a.dropdown-toggle{"data-toggle" => "dropdown", href: ''}
                     Posts
@@ -43,7 +34,20 @@
                       = link_to "My Drafts", drafts_posts_path(current_account.accountable)
                     %li
                       = link_to "Published", published_posts_path(current_account.accountable)
+                %li.dropdown
+                  %a.dropdown-toggle{"data-toggle" => "dropdown", href: ''}
+                    Settings
+                    %b.caret
+                  %ul.dropdown-menu
+                    %li
+                      = link_to "Profile", edit_user_path(current_account.accountable)
+                    %li
+                      = link_to "Change Password", edit_account_registration_path
+                    %li
+                      = link_to "LogOut", destroy_account_session_path, method: "delete"
               - if current_account.admin?
+                %li
+                  = link_to "LogOut", destroy_account_session_path, method: "delete"
                 %li
                   = link_to "Admin Dashboard", rails_admin_path
             - else

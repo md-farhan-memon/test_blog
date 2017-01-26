@@ -1,8 +1,13 @@
 class UserController < ApplicationController
-  before_action :verify_user
+  before_action :verify_user, except: [:show]
 
   def show
-    @follower = current_user.present? ? current_user.following?(User.find_by_id(params[:id])) : false
+    if @user = User.find_by_id(params[:id])
+      @posts = @user.posts.published.order('posts.views desc').limit(3)
+      @follower, @can_follow = (current_user.present? ? current_user.following?(@user) : false), current_user.blank? ? true : current_user.id != @user.id
+    else
+      content_not_found
+    end
   end
 
   def edit
@@ -31,7 +36,7 @@ class UserController < ApplicationController
     redirect_to user_path(params[:user_id])
   end
 
-  def delete_image
+  def delete_avatar
     current_user.update_attribute(:avatar, nil)
     redirect_to edit_user_path
   end

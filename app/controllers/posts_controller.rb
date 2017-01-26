@@ -30,7 +30,7 @@ class PostsController < ApplicationController
 
   def published
     if (user = User.find_by_id(params[:id])).present?
-      @posts = user.posts.page(params[:page]).order(@sort)
+      @posts = user.posts.published.page(params[:page]).order(@sort)
       render :index
     else
       content_not_found
@@ -38,7 +38,11 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find_by_id(params[:id]) || content_not_found
+    if @post = Post.includes(:user).find_by_id(params[:id])
+      redirect_to user_path(@post.user) unless @post.user.public? || (current_user.present? && current_user.id == @post.user_id) || (current_user.present? && current_user.following?(@post.user))
+    else
+      content_not_found
+    end
   end
 
   def update
@@ -108,7 +112,7 @@ class PostsController < ApplicationController
   end
 
   def update_view_count
-    @post.increment!(:views)
+    @post.increment!(:views) if @post.published?
   end
 
 end

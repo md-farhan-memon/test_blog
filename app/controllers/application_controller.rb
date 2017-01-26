@@ -17,7 +17,8 @@ class ApplicationController < ActionController::Base
 
   def verify_user
     if current_account.present?
-      redirect_to root_path, flash: {error: 'You are not Admin bro!'} unless current_user
+      error = current_account.user? ? 'You are not Admin bro!' : 'You are Admin bro!'
+      redirect_to root_path, flash: {error: error} unless current_user
     else
       redirect_to new_account_session_path, flash: {error: 'Please Login to Continue..'}
     end
