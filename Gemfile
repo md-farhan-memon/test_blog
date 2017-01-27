@@ -28,6 +28,8 @@ gem 'twitter-typeahead-rails'
 gem "acts_as_follower"
 # User Profile
 gem "paperclip", "~> 5.0.0"
+# Mailer
+gem 'mandrill-api'
 
 gem 'rails_12factor', group: :production
 
