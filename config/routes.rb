@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       post :follow
       delete :unfollow
       delete :delete_avatar
+      get :followers
+      get :following
       resource :posts, only: [] do
         get :drafts
         get :published, on: :collection

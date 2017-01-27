@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_one :account, as: :accountable
   has_many :posts
+  after_create :send_welcome_email
   scope :public_profiles, -> { where(public: true) }
   acts_as_followable
   acts_as_follower
@@ -22,6 +23,10 @@ class User < ActiveRecord::Base
     :content_type => { :content_type => /^image\/(jpeg|png|gif|tiff)$/ }
 
   def full_name
-    "#{first_name} #{last_name}"
+    (name = "#{first_name} #{last_name}").strip.blank? ? email.split('@')[0] : name
+  end
+
+  def send_welcome_email
+    UserMailer.welcome_email(self).deliver
   end
 end

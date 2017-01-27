@@ -1,9 +1,17 @@
 task create_users: :environment do
   o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+  d1 = 20.years.ago
+  d2 = 50.years.ago
   50.times do
     un = (0...10).map { o[rand(o.length)] }.join
     acc = Account.create({email: "#{un}@user.com", password: 'test@1234', password_confirmation: 'test@1234'})
-    usr = User.create({email: acc.email, first_name: un[0..4], last_name: un[5..9]})
+    usr = User.create({ email: acc.email,
+                        first_name: un[0..4],
+                        last_name: un[5..9],
+                        dob: Time.at((d2.to_f - d1.to_f)*rand + d1.to_f).to_date,
+                        gender: ['Male', 'Female'].sample,
+                        public: [true, false].sample
+                      })
     acc.update_attribute(:accountable, usr)
   end
 end
@@ -23,5 +31,11 @@ task create_blogs: :environment do
       views: rand(10..1000)
     })
   end
+end
 
+task follow_users: :environment do
+  users = User.pluck(:id)
+  User.all.each do |user|
+    User.where(id: users.sample(10)).each{ |u| user.follow(u) }
+  end
 end

@@ -36,6 +36,24 @@ class UserController < ApplicationController
     redirect_to user_path(params[:user_id])
   end
 
+  def following
+    if (user = User.find_by_id(params[:id])).present?
+      redirect_to user_path(user) and return unless can_view?(user)
+      @following = user.all_following({order: "created_at desc"}).paginate(page: params[:page] || 1, per_page: 8)
+    else
+      content_not_found
+    end
+  end
+
+  def followers
+    if (user = User.find_by_id(params[:id])).present?
+      redirect_to user_path(user) and return unless can_view?(user)
+      @followers = user.followers({order: "created_at desc"}).paginate(page: params[:page] || 1, per_page: 8)
+    else
+      content_not_found
+    end
+  end
+
   def delete_avatar
     current_user.update_attribute(:avatar, nil)
     redirect_to edit_user_path
@@ -45,5 +63,9 @@ class UserController < ApplicationController
 
   def user_params
     params.permit(:first_name, :last_name, :dob, :gender, :public, :avatar)
+  end
+
+  def can_view?(user)
+    user.public? || (current_user.present? && current_user.id == user.id) || (current_user.present? && current_user.following?(user))
   end
 end

@@ -13,7 +13,6 @@
         = post.created_at.strftime("%b %d, %Y")
     %hr
     %p.lead{style: "text-align: justify;"}= truncate(post.body, length: 250)
-    %p ...
     %p.text-right
       %a{href: post_path(post)}
         continue reading...

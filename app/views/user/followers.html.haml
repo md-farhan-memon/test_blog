@@ -1,0 +1,3 @@
+%h1{align: "center"}= "#{@followers.total_entries} Followers"
+%hr
+= render partial: 'user_list', locals: {users: @followers}

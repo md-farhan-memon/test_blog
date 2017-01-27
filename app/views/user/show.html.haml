@@ -37,21 +37,27 @@
   .col-md-9{style: "margin-top: -10%"}
     .col-md-4
       %span.glyphicon.glyphicon-user
-      = "#{pluralize(@user.followers_count, 'Follower')}"
+      = link_to "#{pluralize(@user.followers_count, 'Follower')}", followers_user_path(@user), style: "color:black"
     .col-md-4
       %span.glyphicon.glyphicon-heart
-      = "Following #{@user.follow_count}"
+      = link_to "Following #{@user.follow_count}", following_user_path(@user), style: "color:black"
     .col-md-4
       %span.glyphicon.glyphicon-pencil
-      = "#{pluralize(@user.posts.count, 'Post')}"
+      = link_to "#{pluralize(@user.posts.count, 'Post')}", published_posts_path(@user), style: "color:black"
     %hr
 %br
 .row
   %hr
   - if @user.public || @follower || !@can_follow
-    %h1{align: "center"} Top Posts
-    = render partial: '/posts/listing', locals: { paginate: false }
-    %div{align: "center"}= button_to "View all Posts", published_posts_path(@user), method: 'get', class: "btn btn-primary"
+    - if @posts.present?
+      %h1{align: "center"} Top Posts
+      = render partial: '/posts/listing', locals: { paginate: false }
+      - if @user.posts.count > 3
+        %div{align: "center"}= button_to "View all Posts", published_posts_path(@user), method: 'get', class: "btn btn-primary"
+    - else
+      %h1{align: "center"} No Posts
+      - unless @can_follow
+        %div{align: "center"}= button_to 'Share Your Thoughts with the World', new_post_path, method: :get, class: 'btn btn-large btn-primary'
   - else
     %h1{align: "center"} Porfile is Private
 
