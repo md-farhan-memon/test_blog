@@ -78,7 +78,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   #Mailer
-  config.action_mailer.default_url_options = { :host => 'herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'gmail.com' }
   # Rails.application.routes.default_url_options[:host] = 'test-blog-farhan.herokuapp.com'
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
@@ -99,10 +99,11 @@ Rails.application.configure do
     address: ENV.fetch("SMTP_ADDRESS"),
     authentication: :plain,
     enable_starttls_auto: true,
+    domain: 'gmail.com',
     password: ENV.fetch("SMTP_PASSWORD"),
     port: "587",
     user_name: ENV.fetch("SMTP_USERNAME")
   }
-  config.action_mailer.default_url_options = { host: 'herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'gmail.com' }
 
 end
