@@ -4,7 +4,7 @@
 .row
   .col-md-3
     %div{align: "center"}
-      = image_tag image_url(avatar(@user, :large), class: 'imgwrapper img-responsive', style: "align: center")
+      = image_tag image_url(avatar(@user, :large), class: 'imgwrapper img-responsive')
     %hr
     %div{align: "center"}
       - if @can_follow
