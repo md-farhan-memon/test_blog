@@ -28,4 +28,26 @@ To setup:
 
 * run <tt>rake create_blogs</tt> to create dummy blogs
 
-* Browse and feel free to fork, comment and report bugs
+* run <tt>rake follow_users</tt> to make users follow each other randomly
+
+Features:
+
+* Devise Registration and Login
+
+* Welcome Email
+
+* Make Profile Public/Private
+
+* Upload your avatars - Profile Pictures
+
+* Follow/Unfollow users
+
+* TypeAhead Search Topics among 100s of posts
+
+* Create Posts, can add to draft if incomplete
+
+* Sort posts based on popularity and/or creation time
+
+* Fully responsive
+
+== Browse and feel free to fork, comment and report bugs
