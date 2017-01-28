@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_action :verify_user, except: [:show]
+  before_action :verify_user, except: [:show, :following, :followers]
 
   def show
     if @user = User.find_by_id(params[:id])
